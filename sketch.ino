@@ -4,8 +4,8 @@
 #define led_amarelo 9 // Pino utilizado para controle do led amarelo
 #define led_verde 41 // Pino utilizado para controle do led verda
 #define led_vermelho 40 // Pino utilizado para controle do led vermelho
-#define buttonPin = 18;  // Pino utilizado para controle do botão
-#define ldrPin = 4;  // Pino utilizado para controle do LDR
+#define buttonPin 18  // Pino utilizado para controle do botão
+#define ldrPin 4  // Pino utilizado para controle do LDR
 
 int buttonState = 0;  // variável que define estado do botão
 int threshold=600; // variável que define claro e escuro
@@ -29,8 +29,8 @@ void setup() {
 
   WiFi.begin("Wokwi-GUEST", ""); // Conexão à rede WiFi aberta com SSID Wokwi-GUEST
 
+  Serial.print("Conectando...");
   while (WiFi.status() != WL_CONNECT_FAILED) {
-    Serial.print("Conectando ao WiFi.");
     delay(500);
     Serial.print(".");
   }
@@ -80,20 +80,20 @@ void darkMode(){ // Função que ativa o modo escuro
 
 void convMode(){ // Função que ativa o modo convencional
   digitalWrite(led_verde, HIGH);
-  estadoSinal = aberto;
+  estadoSinal = 0;
   delay(3000);
   digitalWrite(led_verde, LOW);
   digitalWrite(led_amarelo, HIGH);
-  estadoSinal = trans;
+  estadoSinal = 1;
   delay(2000);
   digitalWrite(led_amarelo, LOW);
   digitalWrite(led_vermelho, HIGH);
-  estadoSinal = fechado;
+  estadoSinal = 2;
   delay(5000);
 }
 
 void openButton(){ // função que permite ligar o sinal verde caso o botão seja pressionado
-  if(estadoSinal == fechado && buttonState == LOW){
+  if(estadoSinal == 2 && buttonState == LOW){
     digitalWrite(led_verde, HIGH);
     delay(1000);
     digitalWrite(led_verde, LOW);
